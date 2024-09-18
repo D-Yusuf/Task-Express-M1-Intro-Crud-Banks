@@ -2,9 +2,10 @@ const accounts = require("../../accounts")
 const UserSchema = require("../../models/UserSchema")
 // Get all users
 const getAllUsers = async(req, res) => {
+    const {funds} = req.query
     try {
         const users = await UserSchema.find()
-        return res.status(200).json({ data: users });
+        return res.status(200).json({ data: users.filter(user=>user.funds >= (funds || 0)) });
     } catch (error) {
         return res.status(500).json({ error });
     }
