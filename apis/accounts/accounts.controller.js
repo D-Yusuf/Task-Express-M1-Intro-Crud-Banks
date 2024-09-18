@@ -31,7 +31,7 @@ const getAllUsers = async(req, res) => {
   // Add a new user
   const addUser = async(req, res) => {
     try {
-        const newUser = req.body;
+        const newUser = {...req.body, funds: req.body.funds || 0};
         await UserSchema.create(newUser)
         const users = await UserSchema.find()
         return res.status(201).json({ data: users });
